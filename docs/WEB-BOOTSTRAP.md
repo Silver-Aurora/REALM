@@ -1,10 +1,16 @@
 # Web bootstrap
 
-Run the bootstrap CLI from a REALM checkout:
+Run the wrapper matching the host when Node is not installed yet:
 
 ```bash
-node scripts/setup-web.mjs
+# macOS/Linux
+bash scripts/setup-web.sh
+
+# Windows PowerShell
+powershell -ExecutionPolicy Bypass -File scripts/setup-web.ps1
 ```
+
+After Node is available, both wrappers hand off to the same `setup-web.mjs` CLI.
 
 It is designed for local or controlled self-hosting. The CLI:
 
