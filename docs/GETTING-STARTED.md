@@ -1,42 +1,17 @@
 # Getting started
 
-This guide runs REALM locally with PostgreSQL. It assumes a Linux/macOS development machine; Windows users may use Docker or an equivalent PostgreSQL 17 setup.
+This guide runs REALM locally. It assumes Node.js 22.13+ and Git; PostgreSQL/pgvector can be installed locally or supplied through the Docker fallback. A live model provider is optional for deterministic tests.
 
-## 1. Install prerequisites
-
-- Node.js 22.13 or newer;
-- PostgreSQL 17 with the `pgvector` extension;
-- Docker, for the disposable integration-test cluster;
-- Git.
-
-A live model provider is optional for deterministic tests. For interactive generation, configure an OpenAI-compatible provider through the local settings page or `.env.local`.
-
-## 2. Install dependencies
+## 1. Bootstrap and start
 
 ```bash
-npm ci
-cp .env.example .env.local
+node scripts/setup-web.mjs
 ```
 
-Review `.env.local` before starting. Keep it untracked and use loopback database addresses for local development.
+The CLI asks before installing missing prerequisites, creates `.env.local`, installs npm dependencies, starts local PostgreSQL or Docker pgvector, applies migrations, seeds the demo world, starts REALM, and opens the browser. Use `node scripts/setup-web.mjs --check` for a read-only probe.
 
-## 3. Bootstrap PostgreSQL
+See [Web bootstrap](./WEB-BOOTSTRAP.md) for the supported modes and safety boundaries.
 
-```bash
-npm run db:postgres:bootstrap
-```
-
-The bootstrap path starts the local PostgreSQL service, applies migrations, and loads the demo seed. If you manage PostgreSQL yourself, set the connection variables in `.env.local` and run the migration/seed commands separately.
-
-## 4. Start REALM
-
-```bash
-npm run dev
-```
-
-Open the printed local URL. The default is `http://127.0.0.1:9999`.
-
-## 5. Verify the checkout
 
 ```bash
 npm test
