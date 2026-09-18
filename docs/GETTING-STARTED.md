@@ -46,6 +46,10 @@ npm run typecheck
 
 The full test command uses an isolated scratch PostgreSQL cluster for integration coverage. It should not connect to a personal or production database.
 
+## Desktop and source deployment
+
+For unsigned macOS/Windows preview packages, see [Desktop installation](./DESKTOP-INSTALLATION.md). For a source checkout, the current web path still requires Node.js and a local PostgreSQL/pgvector setup; it is not yet a clean-machine one-click installer.
+
 ## Troubleshooting
 
 - **PostgreSQL connection errors:** check that PostgreSQL 17 is running, `pgvector` is installed, and the three connection variables point to the same local database.
