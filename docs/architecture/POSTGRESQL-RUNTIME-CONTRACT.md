@@ -146,7 +146,7 @@ cross-Workspace denial.
 
 ## T-series authorization provenance
 
-This chapter documents the public grant provenance.
+Appended by batch T10-B19-A (spec: `docs/development/T10-B19-A-PG-CONTRACT-PROVENANCE.md`).
 This chapter records where the experience batches' `realm_runtime` grants come
 from. It changes no SQL, no privilege and no runtime behavior; the authoritative
 statements remain the migration files themselves (0013–0023, read verbatim at
