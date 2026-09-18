@@ -23,7 +23,7 @@ If you explicitly allow another device on a trusted LAN:
 - monitor model-provider spend and response failures;
 - document how data is backed up, retained, and deleted.
 
-Cross-device LAN, Android WebView, WebKit, relay/TURN, and public internet deployment are not guaranteed by this research preview.
+This release runs as a local single-player world system. Operating it beyond one machine belongs to the LAN section above and requires the listed access controls.
 
 ## Data boundary
 

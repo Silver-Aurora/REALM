@@ -1,18 +1,21 @@
 # REALM documentation
 
-This directory contains documentation intended for public users and contributors.
+Documents for players come first; engineering references are kept in their own section.
 
-## Start here
+## 开始游玩 / Start here
 
-1. [Desktop installation](./DESKTOP-INSTALLATION.md)
-2. [Web bootstrap](./WEB-BOOTSTRAP.md)
-3. [Getting started](./GETTING-STARTED.md)
-4. [Configuration](./CONFIGURATION.md)
-5. [Self-hosting boundaries](./SELF-HOSTING.md)
-6. [System design](./architecture/SYSTEM-DESIGN.md)
-7. [Technical architecture](./architecture/TECHNICAL-ARCHITECTURE.md)
-8. [PostgreSQL runtime contract](./architecture/POSTGRESQL-RUNTIME-CONTRACT.md)
-9. [Local Record API](./architecture/LOCAL-RECORD-API.md)
-10. [Model and memory runtime](./architecture/MODEL-AND-MEMORY-RUNTIME.md)
+1. [Web bootstrap](./WEB-BOOTSTRAP.md) — one-command launcher for macOS, Windows, and Linux
+2. [Getting started](./GETTING-STARTED.md) — verify the checkout and run the test suite
+3. [Configuration](./CONFIGURATION.md) — local database, server binding, and model provider settings
+4. [Self-hosting boundaries](./SELF-HOSTING.md) — safe local and LAN operating boundaries
+5. [Desktop installation](./DESKTOP-INSTALLATION.md) — unsigned preview packages
+6. [System design](./architecture/SYSTEM-DESIGN.md) — how the world, memory, and rules actually work
 
-Internal progress ledgers, agent instructions, deployment evidence, private operations notes, and historical experiment logs are intentionally excluded from the public repository.
+## 工程参考 / Engineering references
+
+These are working documents for contributors. They record design decisions and internal contracts; they are not player guides.
+
+- [Technical architecture](./architecture/TECHNICAL-ARCHITECTURE.md) — engineering design review (module boundaries, concurrency, contracts)
+- [PostgreSQL runtime contract](./architecture/POSTGRESQL-RUNTIME-CONTRACT.md) — storage and migration invariants
+- [Local Record API](./architecture/LOCAL-RECORD-API.md) — record-level runtime interface
+- [Model and memory runtime](./architecture/MODEL-AND-MEMORY-RUNTIME.md) — inference and memory pipeline notes

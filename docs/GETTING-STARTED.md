@@ -1,6 +1,6 @@
 # Getting started
 
-The easiest path is the web bootstrap launcher. It is intended for a local or controlled self-hosted preview.
+The easiest path is the web bootstrap launcher, which runs REALM on your own machine.
 
 ## Start REALM
 
@@ -38,7 +38,7 @@ The full test command uses an isolated scratch PostgreSQL cluster for integratio
 
 ## Desktop and source deployment
 
-For unsigned macOS/Windows preview packages, see [Desktop installation](./DESKTOP-INSTALLATION.md). The source checkout now has a one-command web bootstrap, but it is still not a signed desktop release or a hosted service.
+For macOS/Windows preview packages, see [Desktop installation](./DESKTOP-INSTALLATION.md). The source checkout itself boots with a single command via the web launcher.
 
 ## Troubleshooting
 

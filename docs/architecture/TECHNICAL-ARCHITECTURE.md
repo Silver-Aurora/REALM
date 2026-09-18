@@ -1,6 +1,6 @@
 # 多人叙事角色运行时：技术与架构方案
 
-> 文档状态：技术架构评审稿 v0.1
+> 文档状态：工程设计与评审记录。面向贡献者，记录模块边界、并发模型和内部契约；玩家请从 [Web 一键启动](../WEB-BOOTSTRAP.md) 开始。
 > 配套文档：[《多人叙事角色运行时：总体设计方案》](./SYSTEM-DESIGN.md)
 > 目标读者：技术负责人、后端/前端工程师、AI Runtime 工程师、测试与运维
 > 架构阶段：模块化单体起步，保留按证据拆分服务的边界
@@ -828,7 +828,7 @@ Character Card → CharacterDefinition Draft
 World Info / Lorebook → Lore Source Documents / Entity-Claim Drafts
 ```
 
-不兼容并且不执行 SillyTavern 的聊天运行时、Extension、STscript、Quick Reply、Regex 脚本、Prompt Preset 或宏。导入流程保存原文件 Hash、来源版本、规范化结果和字段映射报告；无法识别的字段可封存为原始元数据，但不会进入 Prompt 或获得执行权限。所有导入结果必须经预览确认后才进入正式资产库。
+不兼容并且不执行外部聊天平台的运行时、Extension、STscript、Quick Reply、Regex 脚本、Prompt Preset 或宏。导入流程保存原文件 Hash、来源版本、规范化结果和字段映射报告；无法识别的字段可封存为原始元数据，但不会进入 Prompt 或获得执行权限。所有导入结果必须经预览确认后才进入正式资产库。
 
 ---
 

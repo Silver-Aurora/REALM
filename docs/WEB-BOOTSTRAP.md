@@ -12,7 +12,7 @@ powershell -ExecutionPolicy Bypass -File scripts/setup-web.ps1
 
 After Node is available, both wrappers hand off to the same `setup-web.mjs` CLI.
 
-It is designed for local or controlled self-hosting. The CLI:
+The CLI:
 
 1. checks Node.js 22.13+, npm, PostgreSQL/pgvector, and Docker;
 2. shows an installation action before it runs Homebrew or winget;
@@ -65,4 +65,4 @@ On Windows, Docker Desktop is the supported automatic fallback because compiling
 
 If you call `setup-web.mjs` directly, Node.js must already be available. The macOS/Linux and Windows wrappers can offer to install Node through Homebrew or winget, then ask you to open a fresh terminal and run the launcher again. The bootstrap CLI does not silently overwrite an existing `.env.local`, delete data, expose the server to a LAN, or install model credentials.
 
-The bootstrap path is a source deployment helper, not a signed desktop release and not a public SaaS deployment system.
+The bootstrap path ships REALM from source with a single command.
