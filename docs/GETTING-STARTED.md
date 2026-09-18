@@ -1,17 +1,32 @@
 # Getting started
 
-This guide runs REALM locally. It assumes Node.js 22.13+ and Git; PostgreSQL/pgvector can be installed locally or supplied through the Docker fallback. A live model provider is optional for deterministic tests.
+The easiest path is the web bootstrap launcher. It is intended for a local or controlled self-hosted preview.
 
-## 1. Bootstrap and start
+## Start REALM
+
+Use the launcher for your system:
 
 ```bash
-node scripts/setup-web.mjs
+# macOS/Linux
+bash START-REALM-Linux.sh
+
+# Windows PowerShell
+powershell -ExecutionPolicy Bypass -File scripts/setup-web.ps1
 ```
 
-The CLI asks before installing missing prerequisites, creates `.env.local`, installs npm dependencies, starts local PostgreSQL or Docker pgvector, applies migrations, seeds the demo world, starts REALM, and opens the browser. Use `node scripts/setup-web.mjs --check` for a read-only probe.
+On Windows, you can also double-click `START-REALM-Windows.cmd`. On macOS, double-click `START-REALM.command`.
+
+The launcher checks Node.js, npm, PostgreSQL/pgvector, and Docker. It asks before installing supported missing tools, creates `.env.local`, initializes the database, loads the demo seed, starts the web server, and opens the browser.
+
+Use this for a read-only check:
+
+```bash
+node scripts/setup-web.mjs --check
+```
 
 See [Web bootstrap](./WEB-BOOTSTRAP.md) for the supported modes and safety boundaries.
 
+## Verify the checkout
 
 ```bash
 npm test
@@ -23,7 +38,7 @@ The full test command uses an isolated scratch PostgreSQL cluster for integratio
 
 ## Desktop and source deployment
 
-For unsigned macOS/Windows preview packages, see [Desktop installation](./DESKTOP-INSTALLATION.md). For a source checkout, the current web path still requires Node.js and a local PostgreSQL/pgvector setup; it is not yet a clean-machine one-click installer.
+For unsigned macOS/Windows preview packages, see [Desktop installation](./DESKTOP-INSTALLATION.md). The source checkout now has a one-command web bootstrap, but it is still not a signed desktop release or a hosted service.
 
 ## Troubleshooting
 

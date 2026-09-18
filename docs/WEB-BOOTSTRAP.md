@@ -63,6 +63,6 @@ On Windows, Docker Desktop is the supported automatic fallback because compiling
 
 ## What the CLI cannot do
 
-A Node script cannot install Node before it can start. If Node is missing or older than 22.13, install/upgrade Node first and rerun the command. The CLI also does not silently overwrite an existing `.env.local`, delete data, expose the server to a LAN, or install model credentials.
+If you call `setup-web.mjs` directly, Node.js must already be available. The macOS/Linux and Windows wrappers can offer to install Node through Homebrew or winget, then ask you to open a fresh terminal and run the launcher again. The bootstrap CLI does not silently overwrite an existing `.env.local`, delete data, expose the server to a LAN, or install model credentials.
 
 The bootstrap path is a source deployment helper, not a signed desktop release and not a public SaaS deployment system.
