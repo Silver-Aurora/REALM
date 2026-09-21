@@ -19,8 +19,9 @@ For local development, keep these connections on `127.0.0.1`, `localhost`, or `:
 |---|---|
 | `HOST_BIND` | Bind address; loopback is the safe default |
 | `PORT` | Local HTTP port; defaults to `9999` |
-| `REALM_ACCESS_TOKEN` | Optional local access gate |
-| `REALM_SESSION_SECRET` | Local session signing secret |
+| `REALM_SESSION_SECRET` | Optional session signing secret; a stable per-install key file is generated when unset |
+
+REALM signs in with an account name plus an optional password (see `docs/development/DEPLOY-AUTH.md`). A leftover `REALM_ACCESS_TOKEN` is ignored — it is no longer a credential or a startup prerequisite.
 
 An explicit LAN bind is an operator decision. A bind address does not provide authentication, encryption, or public-service safety by itself.
 
