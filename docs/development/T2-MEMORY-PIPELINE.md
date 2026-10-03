@@ -55,7 +55,7 @@ occurred/available_from 世界坐标、fidelity、metadata）。DB 实测已有 
 
 memory snapshot/delta（DB 0 条）本批不接，留 T10 审计项处理。
 
-## 二、Hermes 参照（/home/lyle/.hermes/hermes-agent，只读）
+## 二、Hermes 参照（/opt/hermes/hermes-agent，只读）
 
 - `agent/memory_provider.py`：
   - `prefetch(query)`——每次 API 调用前注入召回文本；**实现必须快**（后台线程跑真召回，
@@ -216,7 +216,7 @@ memorySync?: {
 
 ### 5.4 回归
 
-10. `npm test` 全绿（含既有 PG 集成）；全量 GUI 回归通过（HOST_BIND=192.168.31.238，
+10. `npm test` 全绿（含既有 PG 集成）；全量 GUI 回归通过（HOST_BIND=192.0.2.10，
     真实模型不许 mock）；旧断言中依赖「召回即物化」的（如
     postgres-local-record-application.test.ts 的 conclusions==observations 断言、
     GUI E1 的非空断言）同步改为「萃取后断言」，全文检索核对无遗漏。

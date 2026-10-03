@@ -39,7 +39,7 @@
 
 - **T1 世界初夜**：创世落笔后的第一轮可玩密度——场景即时生成、角色在场、钩子事件开场。
 - **T2 记忆管线 sync_turn + prefetch**（Lyle 指定，参考 Hermes 记忆系统；**现状实锤未实现**——全源码 grep sync_turn/prefetch 零命中）。
-  - **Hermes 参照**（/home/lyle/.hermes/hermes-agent）：`agent/memory_provider.py` 定义 ABC——`prefetch(query)` 在每次 API 调用前注入召回文本（实现应快，用后台线程+缓存结果）；`sync_turn(user, assistant)` 在每回合后持久化，**必须非阻塞**（提交后台队列）；`queue_prefetch` 回合结束后为下一回合排队后台召回，结果由下一回合 prefetch 消费。`agent/memory_manager.py:695-730` 用单写者后台线程串行化写入（turn N 先于 N+1 落库）；`prefetch_all`（:525）在独立线程跑 provider.prefetch，失败不阻塞其他 provider。
+  - **Hermes 参照**（/opt/hermes/hermes-agent）：`agent/memory_provider.py` 定义 ABC——`prefetch(query)` 在每次 API 调用前注入召回文本（实现应快，用后台线程+缓存结果）；`sync_turn(user, assistant)` 在每回合后持久化，**必须非阻塞**（提交后台队列）；`queue_prefetch` 回合结束后为下一回合排队后台召回，结果由下一回合 prefetch 消费。`agent/memory_manager.py:695-730` 用单写者后台线程串行化写入（turn N 先于 N+1 落库）；`prefetch_all`（:525）在独立线程跑 provider.prefetch，失败不阻塞其他 provider。
   - **REALM 现状（修正：管线存在但为同步惰性版，非缺失）**：①摄取已接入回合写入管线（runtime-repository.ts:718 落 observations，DB 实测 169 条）；②萃取是**惰性萃取**——藏在 recallAuthorized 内部（memory-repository.ts:148-206），每次召回在同一事务里先物化新 observations 再排序，萃取粘在注入里、全在关键路径；③注入已通（model-powered.ts:462/511）；④snapshot/delta 接口存在但 DB 0 条，游玩闭环未接（死代码）；⑤萃取为纯机械搬运无 LLM 提炼（113 conclusions=90 explicit 原样搬运 + 23 API 手动 summary）。
   - **实施顺序（先拆后移）**：①第一步把萃取从 recall 事务里拆出——回合提交完成后异步物化 observations→conclusions（sync_turn 形态，后台单写者串行，失败不阻塞回合），recall 只做排序查询；②第二步召回并行化——回合开始时与模型调用并行发起召回（prefetch），请求体组装时结果已就绪，移除 model-powered.ts:442/491 的串行 await；③请求体注入位置不变：角色 messages 的「当前时间点可用的相关记忆」段（:462/:511）。
   - 验收：回合响应时间不再包含萃取+召回串行延迟；sync_turn 失败不影响回合提交；召回内容真实进入请求体；幂等性保持（重复萃取不产生重复 conclusions）。
@@ -270,7 +270,7 @@
 - **commit 链**：0cd2a55（规范）→ 803f45e（实现+K7）→ 本次（收口）。无 git add -A。
 - **设计思路**：初次加载与手动刷新统一进同一条 load()——loading + loadedOnce 状态机区分「正在加载图谱…」/「正在刷新…」文案；双端点（world-knowledge + canon）Promise.all 整体成败，任一失败保留旧数据不出撕裂态；每次 load 递增序号仅最新响应落 state（防旧覆盖新），mountedRef 防卸载 setState；非 2xx 显式 throw 进 notice（此前会静默 json() 出空快照冒充「没有数据」）；选中实体存在保留/消失才清空。按钮置 .graph-actions 末位——CSS sibling 选择器让首按钮为主色实心，末位追加避免改变「新建实体」既有主次样式。
 - **验证证据**：K7 Chromium exit 0、WebKit 补跑 exit 0（focused 单用例，未跑完整 GUI）；typecheck/受影响 eslint/api-core-wiring 7/7/文档布局 2/2/git diff --check 全 exit 0；未跑全量。种子数据落开发库 demo 世界（同 K1–K6 惯例，clean-gui-test-data.sql 可清），零临时库对象，realm-dev.service 保持 active。
-- **新发现**：①图谱节点标签超 6 字截断（`name.slice(0, 6)…`），K1–K6 的前缀 hasText 匹配因此成立，但 uniqueName 全名匹配会假阴性——且时间戳 base36 前导字符变化极慢，「名称前 6 字」在同窗口期重跑会撞残留实体；K7 改用节点 `<g role="button">` 的 aria-label（带完整名称）精确匹配，既绕开截断又重跑安全；②realm-dev.service 以 HOST_BIND=192.168.31.238 绑定而非回环，GUI focused 跑法需带 HOST_BIND 环境变量（playwright.config 已支持，curl 127.0.0.1 探测会误判服务不可用）。
+- **新发现**：①图谱节点标签超 6 字截断（`name.slice(0, 6)…`），K1–K6 的前缀 hasText 匹配因此成立，但 uniqueName 全名匹配会假阴性——且时间戳 base36 前导字符变化极慢，「名称前 6 字」在同窗口期重跑会撞残留实体；K7 改用节点 `<g role="button">` 的 aria-label（带完整名称）精确匹配，既绕开截断又重跑安全；②realm-dev.service 以 HOST_BIND=192.0.2.10 绑定而非回环，GUI focused 跑法需带 HOST_BIND 环境变量（playwright.config 已支持，curl 127.0.0.1 探测会误判服务不可用）。
 - **下一轮决策（T10-B11 候选）**：①D1 实际删除评审（T10-B4 前置条件）；②POSTGRESQL-RUNTIME-CONTRACT 增补 T 系列授权段文档化；③propagation/semantic-conflict 真实接线评审（前置条件见 T10-B9-A 规范 §二）；④图谱自动刷新（轮询/SSE）评审——本批明确只做手动刷新。
 
 ### T10-B11-A · D1 退役可执行评审（2026-08-21 派单 → 收口）

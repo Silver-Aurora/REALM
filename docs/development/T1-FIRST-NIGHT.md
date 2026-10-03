@@ -187,7 +187,7 @@ tests/gui/t1-first-night.spec.ts（真实模型回合，不 mock）：
 
 - commit 拆分：规范文档 → 能力点1（场景即时生成）→ 能力点2（角色在场）→
   能力点3（钩子事件开场）→ GUI 用例收口；每个能力点完成后立即 GUI 验证。
-- GUI 验证：HOST_BIND=192.168.31.238，真实模型，不 mock。
+- GUI 验证：HOST_BIND=192.0.2.10，真实模型，不 mock。
 - 每次 GUI/集成写入后执行 scripts/clean-gui-test-data.sql（新增表
   record_first_nights 由记录级联删除覆盖，清理脚本无需新增规则——records
   删除即 CASCADE；核对后在报告记录计数）。

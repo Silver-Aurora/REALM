@@ -91,6 +91,12 @@ system-only 请求后补一条无业务内容的最小 user turn，保留原始�
 - structured outputs 支持；
 - 当前输入/输出价格。
 
+设置页另提供 `POST /api/settings/model-provider` 的 `action: "billing"` 查询。
+服务端使用候选 profile 请求供应商 `/models`，只返回当前选定模型的
+`providerId`、`modelId`、费率和 `costClass`；API key、完整 profile 与端点不会进入响应。
+供应商没有返回费率、选定模型不在目录中或费率结构无法识别时，`pricing` 为 `null`、
+`costClass` 为 `unknown`，界面显示“费率未知”。该查询不把未经保存的草稿写入本机设置。
+
 发现时优先选同时支持 tools 与 structured outputs 的免费模型；若没有，再退到支持 tools 的免费模型，最后才选择目录第一项。
 
 ## 7. 官方依据
@@ -101,7 +107,7 @@ system-only 请求后补一条无业务内容的最小 user turn，保留原始�
 
 ## 8. 验收
 
-- `tests/model-provider-config.test.ts`：目录、旧格式迁移、多 profile 保存、公开密钥脱敏、费率解析、OpenRouter 请求体；
+- `tests/model-provider-config.test.ts`：目录、旧格式迁移、多 profile 保存、公开密钥脱敏、通用费率解析、计费查询（有价/未知）、OpenRouter 请求体；
 - `tests/gui/f-settings.spec.ts`：双供应商 UI、免费标记、费率展示、真实连接探针；
 - `npm run test:core`；
 - `npm run test:application`；

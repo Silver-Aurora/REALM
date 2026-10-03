@@ -21,7 +21,7 @@
   `daemon-reload`。Worker 停止是天然安全态：队列持久化（pending 行保留），
   无在途丢失——running 遗留由下一次启动的 stale recovery 回收（§三）。
 - **模板最小修正**（本批唯一模板变更）：`ExecStart` 的 `/usr/bin/env node`
-  改为绝对路径 `/home/lyle/.hermes/node/bin/node`（v22.23.2，与
+  改为绝对路径 `/usr/bin/node`（v22.23.2，与
   realm-dev.service 同源）——user manager 的 PATH 经 mise shims 解析到
   node v25.9.0，与仓库 `engines: >=22.13.0` 的实测运行时不一致。
 

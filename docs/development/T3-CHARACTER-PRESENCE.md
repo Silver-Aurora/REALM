@@ -221,7 +221,7 @@ presence 回合是一次完整 `executeTurn`，载荷标记 `payload.presence`�
 1. T3-1：真实模型回合（不点名任何角色）提交后，无额外玩家输入，时间线出现带
    `data-presence` 的角色事件（event-character，committed，含 dialogue 段）；
 2. 预算断言：单回合后 `data-presence` 事件数 ≤ 1；
-3. 全程真实模型（门禁与发声均为真实模型调用），HOST_BIND=192.168.31.238。
+3. 全程真实模型（门禁与发声均为真实模型调用），HOST_BIND=192.0.2.10。
 
 ## 五、实施顺序（commit 链）
 

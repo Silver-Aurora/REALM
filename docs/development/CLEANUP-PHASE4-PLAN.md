@@ -9,7 +9,7 @@
 - 初始审计基线：`0d2aa88b9010de38ce0ce5e99073675fa2781ee1`
 - 当前实现基线：`16bde138c619fdebc5a020e8c924c0298220c4da`
 - 私有开发仓库是当前 canonical source；本计划不包含凭据、连接串、真实玩家内容或生产数据。
-- Kimi Code 每批使用绝对 `cwd=/home/lyle/works/REALM`，同一工作树只允许一个 writer。
+- Kimi Code 每批使用绝对 `cwd=/workspace/REALM`，同一工作树只允许一个 writer。
 - 每批先由 Kimi 复核当前代码和本计划，输出 GO/CONDITIONAL/NO-GO；可行后在本批直接实现。
 - Kimi 不负责最终提交；Iris 在 callback、实际 diff、测试和边界检查闭合后按主题提交。
 - `accepted`、`busy`、卡片状态、`prompt.completed`、进程存在和单次测试绿灯都不能单独证明完成。
